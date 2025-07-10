@@ -19,13 +19,6 @@ public class AllPomTest {
         driver.manage().window().maximize();
     }
 
-    @AfterAll
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-
     @Test
     public void testDragAndDrop() {
         DragAndDropPage page = new DragAndDropPage(driver);
@@ -81,9 +74,26 @@ public class AllPomTest {
     public void testSVGElementsScreenshot() throws IOException {
         SVGElementsPage page = new SVGElementsPage(driver);
         page.gotoPage(BASE_URL + "/svg_elements");
-        List<?> svgs = page.getAllSVGElements();
-        Assertions.assertTrue(svgs.size() > 0);
-        // Screenshot comparison logic can be added here if needed
+        List<String> goldenNames = List.of(
+            "Screenshot-2025-07-04-at-10-24-08.png",
+            "Screenshot-2025-07-04-at-10-24-16.png",
+            "Screenshot-2025-07-04-at-10-24-23.png"
+        );
+        double maxDifferencePercent = 20.0;
+        boolean result = page.compareSVGsWithGoldenImages(
+            "/home/l4w45h-linux/javaselenport/files/screenshots",
+            "/home/l4w45h-linux/javaselenport/files",
+            goldenNames,
+            maxDifferencePercent
+        );
+        Assertions.assertTrue(result, "SVG screenshots do not match golden images within allowed difference!");
     }
 
+
+    @AfterAll
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 } 
