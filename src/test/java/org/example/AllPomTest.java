@@ -81,7 +81,7 @@ public class AllPomTest {
         );
         double maxDifferencePercent = 20.0;
         boolean result = page.compareSVGsWithGoldenImages(
-            "/home/l4w45h-linux/javaselenport/files/screenshots",
+            "/home/l4w45h-linux/javaselenport/files",
             "/home/l4w45h-linux/javaselenport/files",
             goldenNames,
             maxDifferencePercent
